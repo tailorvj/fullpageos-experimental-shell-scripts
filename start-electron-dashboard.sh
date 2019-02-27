@@ -10,3 +10,12 @@ if find /boot/ -name playlist.json -print -quit |
 else
   echo "/boot/playlist.json does not exist! Doing nothing"
 fi
+
+if ping -q -c 1 -W 1 208.67.222.222 >/dev/null; then
+  echo "Connected to Internet. Checking for update..."
+  cd ~/electron/fullpagedashboard-client
+  git pull
+  npm install
+else
+  echo "Not connected to Internet. No updates for you"
+fi
