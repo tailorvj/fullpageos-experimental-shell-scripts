@@ -13,10 +13,26 @@ else
 fi
 
 if ping -q -c 1 -W 1 208.67.222.222 >/dev/null; then
-  echo "Connected to Internet. Checking for update..."
+  echo "Connected to Internet. Checking for updates..."
   cd ~/electron/fullpagedashboard-client
-  git pull
-  npm install
+  git fetch origin
+  reslog=$(git log HEAD..origin/experimental --oneline)
+    if [[ "${reslog}" != "" ]] ; then
+      git merge --no-edit origin/experimental # completing the pull
+      npm install
+      echo "fullpagedashboard-client has been updated."
+    else
+      echo "fullpagedashboard-client is up to date, skipping update."
+    fi
+  cd ~/electron/fullpageos-experimental-shell-scripts
+  git fetch origin
+  reslog=$(git log HEAD..origin/master --oneline)
+    if [[ "${reslog}" != "" ]] ; then
+      git merge --no-edit origin/master # completing the pull
+      echo "fullpageos-experimental-shell-scripts has been updated."
+    else
+      echo "fullpageos-experimental-shell-scripts is up to date, skipping update."
+    fi
 else
   echo "Not connected to Internet. No updates for you"
 fi
