@@ -15,7 +15,7 @@ fi
 if ping -q -c 1 -W 1 208.67.222.222 >/dev/null; then
   echo "Connected to Internet. Checking for updates..."
   cd ~/electron/fullpagedashboard-client
-  git fetch origin
+  git fetch origin experimental
   reslog=$(git log HEAD..origin/experimental --oneline)
     if [[ "${reslog}" != "" ]] ; then
       git merge --no-edit origin/experimental # completing the pull
@@ -25,7 +25,7 @@ if ping -q -c 1 -W 1 208.67.222.222 >/dev/null; then
       echo "fullpagedashboard-client is up to date, skipping update."
     fi
   cd ~/electron/fullpageos-experimental-shell-scripts
-  git fetch origin
+  git fetch origin master
   reslog=$(git log HEAD..origin/master --oneline)
     if [[ "${reslog}" != "" ]] ; then
       git merge --no-edit origin/master # completing the pull
